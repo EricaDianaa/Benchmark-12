@@ -1,0 +1,127 @@
+         --TABLE--
+CREATE TABLE ANAGRAFICA(
+IdAnagrafica INT PRIMARY KEY IDENTITY,
+Cognome nvarchar(20) NOT NULL,
+Nome nvarchar(20) NOT NULL,
+Indirizzo nvarchar(50)NOT NULL,
+Citta nvarchar(50)NOT NULL,
+CAP int NOT NULL,
+CodiceFiscale char(16) UNIQUE NOT NULL
+)
+
+CREATE TABLE TIPOVIOLAZIONE(
+IdViolazione INT PRIMARY KEY IDENTITY,
+Descrizione nvarchar(50)NOT NULL,
+)
+
+CREATE TABLE VERBALE(
+IdVerbale INT PRIMARY KEY IDENTITY,
+DataViolazione date NOT NULL,
+IndirizzoViolazione nvarchar(50)NOT NULL,
+NominativoAgente nvarchar(30),
+DataTransizioneVerbale date NOT NULL,
+Importo money,
+DecurtamentoPunti int ,
+IdAnagrafica int,
+IdViolazione int,
+CONSTRAINT FK_ANAGRAFICA_VERBALE
+FOREIGN KEY (IdAnagrafica)
+REFERENCES ANAGRAFICA(IdAnagrafica),
+
+CONSTRAINT FK_TIPOVIOLAZIONE_VERBALE
+FOREIGN KEY (IdViolazione)
+REFERENCES TIPOVIOLAZIONE(IdViolazione)
+)
+
+--ANAGRAFICA
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Diana','Erica','Via Garibaldi 1','Parigi',09038,'dnirce0445defhue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Bianchi','Franca','Via Ugo Foscolo 7','Londra',36855,'dnirce0445deftue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Corona','Giada','Via Padova 3','Sardegna',04538,'dnirce2445defhue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Rossi','Mario','Via Petrarca 3 ','Spagna',23038,'dnirce0y45defhue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Cossu','Lorenzo','Via Garibaldi 5','Genova',09034,'dnirco0445defhue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Girardi','Marco','Via Verona 4','Palermo',09034,'dnirco0245defhue')
+INSERT INTO ANAGRAFICA(Cognome,Nome,Indirizzo,Citta,CAP,CodiceFiscale)
+Values('Siani','Francesco','Via Franco 6','Palermo',94833,'dnirco0445deyhue')
+
+--VIOLAZIONE
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Omicidio')
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Rapimento')
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Rapina')
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Guida in stato di ebbrezza')
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Aggressione')
+INSERT INTO TIPOVIOLAZIONE(Descrizione)
+Values('Molestie')
+
+--VERBALE
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('03/11/2021','Viale monterosa','Generale','04/11/2021',12000,3,2,5)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('07/12/2020','Vicolo stretto','Poliziotto','30/01/2029',13000,10,2,2)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('04/05/2023','Via Marco Polo','Dirigente','04/05/2023',1000,21,1,4)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('03/04/2011','Viale dei giardini','Vice','04/04/2011',2000,30,5,1)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('02/12/2009','Via largo augusto','Commisario capo','04/12/2009',5000,5,4,1)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('03/04/2016',' Via Parco della vittoria','Capo','04/04/2016',2100,30,5,1)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('02/12/2002','Via largo ','Commisario vice','04/12/2002',5500,5,7,3)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('01/02/2009','Via largo colombo ','Vice','04/02/2009',200,10,6,1)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('10/05/2009','Via Campo basso ','Direttore','12/05/2009',300,2,3,5)
+INSERT INTO VERBALE(DataViolazione,IndirizzoViolazione,NominativoAgente,DataTransizioneVerbale,Importo,DecurtamentoPunti,IdAnagrafica,IdViolazione)
+Values('10/05/2009','Via Campo  ','Vice','12/05/2009',3004,5,2,6)
+
+
+--ESERCIZI DI SELECT
+--1)
+SELECT COUNT(*) FROM VERBALE
+--2)
+SELECT COUNT(*)AS NumeroVerbali,IdAnagrafica FROM VERBALE
+GROUP BY IdAnagrafica
+--3)
+SELECT COUNT(*)AS NumeroVerbali,IdViolazione FROM VERBALE
+GROUP BY IdViolazione
+--4)
+select SUM(DecurtamentoPunti)as TotDecurtamentoPunti,IdAnagrafica FROM VERBALE
+GROUP BY IdAnagrafica
+--5)
+SELECT Cognome,Nome,DataViolazione,IndirizzoViolazione,Importo,DecurtamentoPunti
+FROM VERBALE INNER JOIN ANAGRAFICA ON VERBALE.IdAnagrafica=ANAGRAFICA.IdAnagrafica
+WHERE ANAGRAFICA.Citta='Palermo'
+--6)
+SELECT Cognome,Nome,Indirizzo,DataViolazione,Importo,DecurtamentoPunti
+FROM VERBALE INNER JOIN ANAGRAFICA ON VERBALE.IdAnagrafica=ANAGRAFICA.IdAnagrafica
+WHERE VERBALE.DataViolazione between '01-02-2009' and  '31-07-2009 '
+--7)
+SELECT SUM(Importo)as Importi, IdAnagrafica FROM VERBALE
+GROUP BY IdAnagrafica
+--8)
+SELECT * FROM ANAGRAFICA 
+WHERE Citta='Palermo'
+--10)
+SELECT COUNT(*)as Verbali, NominativoAgente from VERBALE
+GROUP BY NominativoAgente
+--11)
+SELECT Cognome,Nome,Indirizzo,DataViolazione,Importo,DecurtamentoPunti
+FROM VERBALE INNER JOIN ANAGRAFICA ON VERBALE.IdAnagrafica=ANAGRAFICA.IdAnagrafica
+WHERE VERBALE.DecurtamentoPunti>5
+--12)
+SELECT Cognome,Nome,Indirizzo,DataViolazione,Importo,DecurtamentoPunti
+FROM VERBALE INNER JOIN ANAGRAFICA ON VERBALE.IdAnagrafica=ANAGRAFICA.IdAnagrafica
+WHERE VERBALE.Importo>400
+
+
